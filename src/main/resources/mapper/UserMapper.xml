@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mybatis.mapperLocations=classpath*:mapper/**/*Mapper.xml因为配置文件里面配置了，所以mapper文件必须有后缀Mapper.xml-->
+<mapper namespace="com.cacsi.warehouse.dao.UserDao">
+    <select id="getUserByLoginNameAndPassword" resultType="com.cacsi.warehouse.bean.User">
+        select * from sys_user
+        where loginname=#{loginname} and pwd=#{password}
+    </select>
+</mapper>

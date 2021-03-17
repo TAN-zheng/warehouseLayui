@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--mybatis.mapperLocations=classpath*:mapper/**/*Mapper.xml因为配置文件里面配置了，所以mapper文件必须有后缀Mapper.xml-->
+<mapper namespace="com.cacsi.warehouse.dao.CustomerDao">
+    <select id="getPageList" resultType="com.cacsi.warehouse.bean.Customer">
+        select * from bus_customer
+        <where>
+                <if test="customername!=null and customername!=''">
+                    and customername like CONCAT('%',#{customername},'%')
+                </if>
+            <if test="telephone!=null and telephone!=''">
+                and telephone like CONCAT('%',#{telephone},'%')
+            </if>
+            <if test="connectionperson!=null and connectionperson!=''">
+                and connectionperson like CONCAT('%',#{connectionperson},'%')
+            </if>
+        </where>
+        limit ${page},${limit}
+    </select>
+<!--     $符号是把字符串拿进来拼成一个sql语句。#{telephone}这种方式是传参数的方式。分页
+-->
+<!--    获取查询数据的总条数-->
+    <select id="getCount" resultType="java.lang.Long">
+        select count(*) from bus_customer
+        <where>
+            <if test="customername!=null and customername!=''">
+                and customername like CONCAT('%',#{customername},'%')
+            </if>
+            <if test="telephone!=null and telephone!=''">
+                and telephone like CONCAT('%',#{telephone},'%')
+            </if>
+            <if test="connectionperson!=null and connectionperson!=''">
+                and connectionperson like CONCAT('%',#{connectionperson},'%')
+            </if>
+        </where>
+    </select>
+    <insert id="addCustomer" parameterType="com.cacsi.warehouse.bean.Customer">
+        insert  into bus_customer(customername,zip,address,telephone,connectionperson,phone,bank,account,email)
+        values (#{customername},#{zip},#{address},#{telephone},#{connectionperson},#{phone},#{bank},#{account},#{email})
+    </insert>
+    <select id="getCustomer" resultType="com.cacsi.warehouse.bean.Customer">
+        select * from bus_customer where id=#{id}
+    </select>
+    <update id="updateCustomer" parameterType="com.cacsi.warehouse.bean.Customer">
+        update bus_customer set customername=#{customername},zip=#{zip},address=#{address},telephone=#{telephone},connectionperson=#{connectionperson},phone=#{phone},bank=#{bank},account=#{account},email=#{email}
+    where id=#{id}
+    </update>
+    <delete id="deleteCustomerByIds" parameterType="java.util.List">
+        delete from bus_customer where id in
+        <foreach collection="list" index="index" item="ids" separator="," open="(" close= ")">
+            #{ids}
+        </foreach>
+    </delete>
+</mapper>
