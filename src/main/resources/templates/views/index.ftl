@@ -121,10 +121,12 @@
                   <a lay-href="${request.contextPath}/customer/toCustomerList">客户管理</a>
                 </dd>
                 <dd data-name="button">
-                  <a lay-href="component/button/index.html">供应商管理</a>
+<#--                  访问controller层的路径-->
+                  <a lay-href="${request.contextPath}/provider/toProviderList">供应商管理</a>
                 </dd>
-                <dd data-name="form">
-                  <a href="javascript:;">商品管理</a>
+                <dd data-name="button">
+                  <#--                  访问controller层的路径-->
+                  <a lay-href="${request.contextPath}/goods/toGoodsPage">商品管理</a>
                 </dd>
               </dl>
             </li>

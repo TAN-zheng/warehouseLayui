@@ -51,6 +51,7 @@ public class CustomerController {
     }
 
     @RequestMapping("customerLayer")
+//    required = false,value = "id") String id【equired = false】这句话的意思是这个参数可以传，也可以不传
     public String customerLayer(@RequestParam(required = false,value = "id") String id, Model model){
         Customer customer = customerService.getCustomer(id);
 //        用model传到前台，用EL表达式拿到这个数据。

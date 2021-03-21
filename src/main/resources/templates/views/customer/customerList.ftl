@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Layui</title>
+    <title>客户管理</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -91,7 +91,7 @@
             }]
             ,title: '用户数据表'
             ,cols: [[
-                //是否能被选中。
+                //是否能被选中。fixed: 'left'：固定到左端。
                 {type: 'checkbox', fixed: 'left'}
                 ,{field:'id', title:'ID'}
                 ,{field:'customername', title:'客户名称'}
@@ -194,10 +194,13 @@
             if(obj.event === 'del'){
                 layer.confirm('真的删除这条数据吗？', function(index){
                     // obj.del();
+                    /*
+                    * 利用ajax传数据到后台进行删除
+                    * */
                     $.ajax({
                         type:'post',
                         //后台地址,提交后腰判断他是添加还是更改。
-                        url:'${request.contextPath}/customer/deleteCustomerByIds',
+                        url:'${request.contextPath}/provider/deleteCustomerByIds',
                         //json方法,相当于是请求头
                         // contentType:'application/json;charset=UTF-8',因为只传一个id，所以不用转json
                         //把数据转成json的字符串

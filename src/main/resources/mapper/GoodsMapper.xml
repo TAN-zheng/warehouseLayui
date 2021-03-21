@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cacsi.warehouse.dao.GoodsDao">
+    <select id="getGoodsList" resultType="com.cacsi.warehouse.bean.Goods">
+        select * from bus_goods bus_goods left join bus_provider on bus_goods.providerid=bus_provider.id
+        <where>
+            <if test="providername!=null and providername!=''">
+                and providername like CONCAT('%',#{providername},'%')
+            </if>
+            <if test="goodsname!=null and goodsname!=''">
+                and goodsname like CONCAT('%',#{goodsname},'%')
+            </if>
+            <if test="productcode!=null and productcode!=''">
+                and productcode like CONCAT('%',#{productcode},'%')
+            </if>
+            <if test="promitcode!=null and promitcode!=''">
+                and promitcode like CONCAT('%',#{promitcode},'%')
+            </if>
+            <if test="description!=null and description!=''">
+                and description like CONCAT('%',#{description},'%')
+            </if>
+            <if test="size!=null and size!=''">
+                and gsize like CONCAT('%',#{gsize},'%')
+            </if>
+        </where>
+        limit ${page},${limit}
+    </select>
+    <select id="getCount" resultType="java.lang.Long">
+        select count(*) from bus_goods left join bus_provider on bus_goods.id=bus_provider.id
+        <where>
+            <if test="providername!=null and providername!=''">
+                and providername like CONCAT('%',#{providername},'%')
+            </if>
+            <if test="goodsname!=null and goodsname!=''">
+                and goodsname like CONCAT('%',#{goodsname},'%')
+            </if>
+            <if test="productcode!=null and productcode!=''">
+                and productcode like CONCAT('%',#{productcode},'%')
+            </if>
+            <if test="promitcode!=null and promitcode!=''">
+                and promitcode like CONCAT('%',#{promitcode},'%')
+            </if>
+            <if test="description!=null and description!=''">
+                and description like CONCAT('%',#{description},'%')
+            </if>
+            <if test="size!=null and size!=''">
+                and gsize like CONCAT('%',#{size},'%')
+            </if>
+        </where>
+    </select>
+    <select id="getProviderName" resultType="com.cacsi.warehouse.bean.Provider">
+        select providername from bus_provider
+    </select>
+</mapper>
