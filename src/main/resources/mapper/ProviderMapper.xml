@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cacsi.warehouse.dao.ProviderDao">
+    <select id="getPageList" resultType="com.cacsi.warehouse.bean.Provider">
+        select * from bus_provider
+        <where>
+            <if test="providername!=null and providername!=''">
+                and providername like CONCAT('%',#{providername},'%')
+            </if>
+            <if test="telephone!=null and telephone!=''">
+                and telephone like CONCAT('%',#{telephone},'%')
+            </if>
+            <if test="connectionperson!=null and connectionperson!=''">
+                and connectionperson like CONCAT('%',#{connectionperson},'%')
+            </if>
+        </where>
+        limit ${page},${limit}
+    </select>
+    <select id="getCount" resultType="java.lang.Long">
+        select count(*) from bus_provider
+        <where>
+            <if test="providername!=null and providername!=''">
+                and providername like CONCAT('%',#{providername},'%')
+            </if>
+            <if test="telephone!=null and telephone!=''">
+                and telephone like CONCAT('%',#{telephone},'%')
+            </if>
+            <if test="connectionperson!=null and connectionperson!=''">
+                and connectionperson like CONCAT('%',#{connectionperson},'%')
+            </if>
+        </where>
+    </select>
+    <insert id="addProvider" parameterType="com.cacsi.warehouse.bean.Provider">
+        insert into bus_provider(providername,zip,address,telephone,connectionperson,phone,bank,account,email,fax)
+        values (#{providername},#{zip},#{address},#{telephone},#{connectionperson},#{phone},#{bank},#{account},#{email},#{fax})
+    </insert>
+    <select id="getProvider" resultType="com.cacsi.warehouse.bean.Provider">
+        select * from bus_provider where id=#{id}
+    </select>
+    <update id="updateProvider" parameterType="com.cacsi.warehouse.bean.Provider">
+        update bus_provider set providername=#{providername},zip=#{zip},address=#{address},telephone=#{telephone},connectionperson=#{connectionperson},phone=#{phone},bank=#{bank},account=#{account},email=#{email},fax=#{fax}
+        where id=#{id}
+    </update>
+    <delete id="deleteProviderByIds" parameterType="java.util.List">
+        delete from bus_provider where id in
+        <foreach collection="list" index="index" separator="," item="ids" open="(" close= ")">
+            #{ids}
+        </foreach>
+    </delete>
+</mapper>
