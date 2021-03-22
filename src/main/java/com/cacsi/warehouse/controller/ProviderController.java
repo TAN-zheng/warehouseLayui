@@ -58,7 +58,7 @@ public class ProviderController {
         return result;
     }
 /*
-* 访问子页面的方法
+* 访问子页面的方法,修改数据。
 * */
     @RequestMapping("providerLayer")
     public String toProviderLayer(@RequestParam(required = false,value = "id") String id, Model model){

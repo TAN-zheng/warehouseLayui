@@ -21,7 +21,7 @@
             <if test="description!=null and description!=''">
                 and description like CONCAT('%',#{description},'%')
             </if>
-            <if test="size!=null and size!=''">
+            <if test="gsize!=null and gsize!=''">
                 and gsize like CONCAT('%',#{gsize},'%')
             </if>
         </where>
@@ -45,12 +45,29 @@
             <if test="description!=null and description!=''">
                 and description like CONCAT('%',#{description},'%')
             </if>
-            <if test="size!=null and size!=''">
-                and gsize like CONCAT('%',#{size},'%')
+            <if test="gsize!=null and gsize!=''">
+                and gsize like CONCAT('%',#{gsize},'%')
             </if>
         </where>
     </select>
     <select id="getProviderName" resultType="com.cacsi.warehouse.bean.Provider">
         select providername from bus_provider
     </select>
+    <insert id="addGoods" parameterType="com.cacsi.warehouse.bean.Goods">
+        insert  into bus_goods(goodsname,produceplace,gsize,goodspackage,productcode,promitcode,description,price,number,dangernum,goodsimg,available,providerid,goodsimg)
+        values (#{goodsname},#{produceplace},#{gsize},#{goodspackage},#{productcode},#{promitcode},#{description},#{price},#{number},#{dangernum},#{goodsimg},#{available},#{providerid},#{goodsimg})
+    </insert>
+    <select id="getGoods" resultType="com.cacsi.warehouse.bean.Goods">
+        select * from bus_goods where id=#{id}
+    </select>
+    <update id="updateGoods" parameterType="com.cacsi.warehouse.bean.Goods">
+        update bus_goods set goodsname=#{goodsname},produceplace=#{produceplace},gsize=#{gsize},goodspackage=#{goodspackage},productcode=#{productcode},promitcode=#{promitcode},description=#{description},price=#{price},number=#{number},dangernum=#{dangernum},goodsimg=#{goodsimg},available=#{available},providerid=#{providerid}
+    where id=#{id}
+    </update>
+    <delete id="deleteGoodsByIds" parameterType="java.util.List">
+        delete from bus_goods where id in
+        <foreach collection="list" index="index" separator="," item="ids" open="(" close= ")">
+            #{ids}
+        </foreach>
+    </delete>
 </mapper>

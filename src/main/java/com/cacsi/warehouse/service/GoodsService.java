@@ -29,4 +29,24 @@ public class GoodsService {
 //        返回查询的值给上service层调用此方法的对象。
         return goodsDao.getProviderName();
     };
+    //    新增商品信息
+    public boolean addGoods(Goods goods) {
+        return goodsDao.addGoods(goods);
+    }
+//修改数据
+    public boolean updateGoods(Goods goods) {
+        return goodsDao.updateGoods(goods);
+    }
+
+//修改数据时，从后台查数据到修改页面
+    public Goods getGoods(String id) {
+        return goodsDao.getGoods(id);
+    }
+
+    //删除商品
+    public boolean deleteGoodsByIds(List<Long> ids) {
+        System.out.println("goods service");
+        return goodsDao.deleteGoodsByIds(ids);
+    }
+
 }

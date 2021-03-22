@@ -149,7 +149,7 @@
                     });
                     break;
 
-                    case'multiDelete':
+                    case 'multiDelete':
                         layer.confirm('真的删除这些数据吗？', function(index){
                             // obj.del();
                             var idAry=[];

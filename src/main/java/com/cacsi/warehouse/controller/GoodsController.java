@@ -1,5 +1,6 @@
 package com.cacsi.warehouse.controller;
 
+import com.cacsi.warehouse.bean.Customer;
 import com.cacsi.warehouse.bean.Goods;
 import com.cacsi.warehouse.bean.Provider;
 import com.cacsi.warehouse.common.GoodsQuery;
@@ -7,8 +8,10 @@ import com.cacsi.warehouse.common.Result;
 import com.cacsi.warehouse.service.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
@@ -68,10 +71,60 @@ public class GoodsController {
     * */
     @RequestMapping("getProviderName")
     public Result getProviderName(){
+
         List<Provider> providerList = goodsService.getProviderName();
 
         Result result = new Result();
+        result.setCode(0);
+
         result.setData(providerList);
+        return result;
+    }
+//    新增商品信息
+    @RequestMapping("addOrUpdateGoods")
+    @ResponseBody
+    public Result addOrUpdateGoods(@RequestBody Goods goods){
+        System.out.println(goods);
+        boolean flag=false;
+        if (goods.getId()==null){
+            flag= goodsService.addGoods(goods);
+        }else {
+            flag= goodsService.updateGoods(goods);
+        }
+        Result result = new Result();
+        if (flag==true){
+
+            result.setMsg("操作成功");
+        }else {
+            result.setMsg("操作失败");
+        }
+        return result;
+    }
+    /*
+     * 访问子页面的方法,修改数据。
+     * */
+    @RequestMapping("changeGoodsLayer")
+    public String changeGoodsLayer(@RequestParam(required = false,value = "id") String id, Model model){
+        //         到数据库查询从前端，按钮事件点击传入的id，到数据路查询信息。
+        Goods goods = goodsService.getGoods(id);
+        System.out.println(goods);
+        /*
+         *1、把根据id查询的值，通过model对象，设置进去保存。然后在前端取出对象进行更改。
+         * 2、在前台用EL表达式拿数据就行。例如：格式：${(provider.id)}
+         * */
+        model.addAttribute("goods",goods);
+        return "/views/goods/goodsLayer";
+    }
+/*
+* 删除操作
+* */
+    @RequestMapping("deleteGoodsByIds")
+    @ResponseBody
+    public Result deleteGoodsByIds(@RequestParam List<Long> ids){
+        boolean flag=goodsService.deleteGoodsByIds(ids);
+        Result result = new Result();
+        result.setMsg("成功删除！"+ids.size()+"条数据！");
+        System.out.println(ids+" goods controller");
         return result;
     }
 }

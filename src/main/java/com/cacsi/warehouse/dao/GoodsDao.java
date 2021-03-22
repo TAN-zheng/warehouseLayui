@@ -17,4 +17,12 @@ public interface GoodsDao {
     public Long getCount(GoodsQuery GoodsQuery);
 //    查询一个供货商的名称
     public List<Provider> getProviderName();
+//新增一个商品
+    boolean addGoods(Goods goods);
+//修改一个商品
+    boolean updateGoods(Goods goods);
+//查询修改页面的返回数据
+    Goods getGoods(String id);
+//    删除一个或者是多个
+public boolean deleteGoodsByIds(List<Long> ids);
 }

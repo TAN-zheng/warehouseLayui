@@ -11,5 +11,5 @@ public class GoodsQuery {
     private Long productcode;
     private Long promitcode;
     private String description;
-    private String size;
+    private String gsize;
 }
